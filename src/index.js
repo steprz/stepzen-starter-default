@@ -4,9 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { ApolloClient, ApolloProvider } from '@apollo/client';
+const { REACT_APP_STEPZEN_API_KEY, REACT_APP_STEPZEN_ENDPOINT } = process.env;
+
+const client = new ApolloClient({
+  headers: {
+    Authorization: `Apikey ${REACT_APP_STEPZEN_API_KEY}`,
+  },
+  uri: REACT_APP_STEPZEN_ENDPOINT
+});
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <ApolloProvider client={client}>
+      <App />
+    </ApolloProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
