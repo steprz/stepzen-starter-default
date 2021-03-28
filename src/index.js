@@ -4,14 +4,15 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-import { ApolloClient, ApolloProvider } from '@apollo/client';
-const { REACT_APP_STEPZEN_API_KEY, REACT_APP_STEPZEN_ENDPOINT } = process.env;
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+const { REACT_APP_STEPZEN_API_KEY, REACT_APP_STEPZEN_URI } = process.env;
 
 const client = new ApolloClient({
+  cache: new InMemoryCache(),
   headers: {
     Authorization: `Apikey ${REACT_APP_STEPZEN_API_KEY}`,
   },
-  uri: REACT_APP_STEPZEN_ENDPOINT
+  uri: REACT_APP_STEPZEN_URI
 });
 
 ReactDOM.render(
