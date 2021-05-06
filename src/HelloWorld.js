@@ -1,7 +1,10 @@
-import { gql, useQuery } from "@apollo/client";
+import { GraphQLClient, gql } from "graphql-request";
+import { useEffect, useState } from "react";
+
+const { REACT_APP_STEPZEN_API_KEY, REACT_APP_STEPZEN_URI } = process.env;
 
 const GET_STEPZEN = gql`
-  query MyHelloWorldQuery {
+  {
     location(ip: "8.8.8.8") {
       city
       weather {
@@ -32,12 +35,11 @@ const styles = {
     padding: "5px 10px",
   },
   link: {
-    margin: "30px 0 50px",
+    marginTop: "20px",
   },
 };
 
-const StepZenResults = (props) => {
-  const { data } = props;
+const StepZenResults = ({ data }) => {
   return (
     <div>
       <table style={styles.table}>
@@ -72,10 +74,23 @@ const StepZenResults = (props) => {
 };
 
 function HelloWorld() {
-  const { loading, error, data } = useQuery(GET_STEPZEN);
+  const [data, setData] = useState();
 
-  if (error) return <p>{JSON.stringify(error)}</p>;
-  if (loading) return <p>Loading ...</p>;
+  useEffect(() => {
+    (async () => {
+      const graphQLClient = new GraphQLClient(REACT_APP_STEPZEN_URI, {
+        headers: {
+          Authorization: `Apikey ${REACT_APP_STEPZEN_API_KEY}`,
+        },
+      });
+      const result = await graphQLClient.request(GET_STEPZEN);
+      setData(result);
+    })();
+  }, []);
+
+  if (!data) {
+    return <p>Loading ...</p>;
+  }
 
   return (
     <>
@@ -102,6 +117,9 @@ function HelloWorld() {
 }`}
       </pre>
       <StepZenResults data={data} />
+      <br />
+      <br />
+      <br />
     </>
   );
 }
