@@ -104,17 +104,7 @@ function HelloWorld() {
         Learn StepZen
       </a>
       <pre style={{ textAlign: "left" }}>
-        {`{
-  location(ip: "8.8.8.8") {
-    city
-    weather {
-      temp
-      units
-      feelsLike
-      description
-    }
-  }
-}`}
+        {GET_STEPZEN}
       </pre>
       <StepZenResults data={data} />
       <br />
