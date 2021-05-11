@@ -1,5 +1,6 @@
 import { GraphQLClient, gql } from "graphql-request";
 import { useEffect, useState } from "react";
+import logo from "./light-blue.svg";
 
 const { REACT_APP_STEPZEN_API_KEY, REACT_APP_STEPZEN_URI } = process.env;
 
@@ -36,6 +37,39 @@ const styles = {
   },
   link: {
     marginTop: "20px",
+    display: "block",
+    marginBottom: "1rem",
+  },
+  code: {
+    padding: "0.8rem",
+    overflow: "auto",
+    display: "inline-table",
+    fontSize: "0.9rem",
+    lineHeight: "1.45",
+    borderRadius: "0.3rem",
+    marginTop: 0,
+    marginBottom: "1rem",
+    // font: "1rem Consolas", "Liberation Mono", "Menlo, Courier, monospace",
+    color: "#567482",
+    wordWrap: "normal",
+    backgroundColor: "#f3f6fa",
+    border: "solid 1px #dce6f0",
+  },
+  pre: {
+    display: "grid",
+    textAlign: "left",
+  },
+  section: {
+    backgroundColor: "#ffffff",
+    padding: "1rem",
+    margin: "1rem",
+    borderRadius: "10px",
+    color: "#000000",
+  },
+  codetext: {
+    marginTop: 0,
+    marginBottom: "1rem",
+    textAlign: "left",
   },
 };
 
@@ -93,7 +127,17 @@ function HelloWorld() {
   }
 
   return (
-    <>
+    <section style={styles.section}>
+      <img
+        style={{
+          width: "10%",
+          display: "block",
+          margin: "0 auto",
+          padding: "1rem",
+        }}
+        src={logo}
+        alt="stepzen"
+      />
       <a
         className="App-link"
         href="https://stepzen.com"
@@ -103,8 +147,18 @@ function HelloWorld() {
       >
         Learn StepZen
       </a>
-      <pre style={{ textAlign: "left" }}>
-        {`{
+      <code style={styles.code}>
+        <p style={styles.codetext}>
+          Your endpoint found in your .env.local folder
+        </p>{" "}
+        {REACT_APP_STEPZEN_URI}
+      </code>
+      <pre style={styles.pre}>
+        <code style={styles.code}>
+          <p style={styles.codetext}>
+            This is the GraphQL query found in ./src/HelloWorld.js
+          </p>
+          {`{
   location(ip: "8.8.8.8") {
     city
     weather {
@@ -115,12 +169,15 @@ function HelloWorld() {
     }
   }
 }`}
+        </code>
       </pre>
-      <StepZenResults data={data} />
-      <br />
-      <br />
-      <br />
-    </>
+      <pre style={styles.pre}>
+        <code style={styles.code}>
+          <p>The GraphQL Query above generates the data table below </p>
+          <StepZenResults data={data} />
+        </code>
+      </pre>
+    </section>
   );
 }
 
